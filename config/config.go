@@ -10,6 +10,12 @@ import (
 )
 
 type (
+	Config struct {
+		Database *Database `mapstructure:"database" validate:"required"`
+		Server   *Server   `mapstructure:"server" validate:"required"`
+		OAuth2   *OAuth2   `mapstructure:"oauth2" validate:"required"`
+	}
+
 	Database struct {
 		Host     string `mapstructure:"host" validate:"required"`
 		Port     int    `mapstructure:"port" validate:"required"`
@@ -43,12 +49,6 @@ type (
 		TokenUrl      string `mapstructure:"tokenUrl" validate:"required"`
 		DeviceAuthUrl string `mapstructure:"deviceAuthUrl" validate:"required"`
 	}
-
-	Config struct {
-		Database *Database `mapstructure:"database" validate:"required"`
-		Server   *Server   `mapstructure:"server" validate:"required"`
-		OAuth2   *OAuth2   `mapstructure:"oauth2" validate:"required"`
-	}
 )
 
 var (
@@ -60,7 +60,7 @@ func LoadCofig() *Config {
 	once.Do(func() {
 		viper.SetConfigName("config")
 		viper.SetConfigType("yaml")
-		viper.AddConfigPath("./")
+		viper.AddConfigPath("./config")
 		viper.AutomaticEnv()
 		viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
