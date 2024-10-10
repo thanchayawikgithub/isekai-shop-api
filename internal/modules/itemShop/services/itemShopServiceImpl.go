@@ -1,6 +1,6 @@
 package services
 
-import "github.com/thanchayawikgithub/isekai-shop-api/internal/itemShop/repositories"
+import "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/repositories"
 
 type itemShopServiceImpl struct {
 	itemShopRepo repositories.ItemShopRepository

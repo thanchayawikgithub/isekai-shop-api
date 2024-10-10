@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/config"
 	"gorm.io/gorm"
@@ -24,6 +25,9 @@ var (
 
 func NewEchoServer(conf *config.Config, db *gorm.DB) *echoServer {
 	app := echo.New()
+
+	app.Use(middleware.Logger())
+	app.Use(middleware.Recover())
 	app.Logger.SetLevel(log.DEBUG)
 
 	once.Do(func() {
