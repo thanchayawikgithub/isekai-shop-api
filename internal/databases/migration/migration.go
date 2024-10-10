@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/thanchayawikgithub/isekai-shop-api/config"
-	"github.com/thanchayawikgithub/isekai-shop-api/databases"
-	"github.com/thanchayawikgithub/isekai-shop-api/entities"
+	"github.com/thanchayawikgithub/isekai-shop-api/internal/config"
+	"github.com/thanchayawikgithub/isekai-shop-api/internal/databases"
+	"github.com/thanchayawikgithub/isekai-shop-api/internal/entities"
 	"gorm.io/gorm"
 )
 

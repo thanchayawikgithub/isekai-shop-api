@@ -5,7 +5,7 @@ import (
 	"log"
 	"sync"
 
-	"github.com/thanchayawikgithub/isekai-shop-api/config"
+	"github.com/thanchayawikgithub/isekai-shop-api/internal/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
