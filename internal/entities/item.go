@@ -2,6 +2,8 @@ package entities
 
 import (
 	"time"
+
+	"github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
 )
 
 type Item struct {
@@ -14,4 +16,14 @@ type Item struct {
 	IsArchive   bool      `gorm:"not null;default:false;"`
 	CreatedAt   time.Time `gorm:"not null;autoCreateTime;"`
 	UpdatedAt   time.Time `gorm:"not null;autoUpdateTime;"`
+}
+
+func (i *Item) ToItemModel() *models.Item {
+	return &models.Item{
+		ID:          i.ID,
+		Name:        i.Name,
+		Description: i.Description,
+		Picture:     i.Picture,
+		Price:       i.Price,
+	}
 }
