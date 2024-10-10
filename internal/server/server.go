@@ -10,9 +10,10 @@ import (
 	"syscall"
 
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
+
 	"github.com/labstack/gommon/log"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/config"
+	"github.com/thanchayawikgithub/isekai-shop-api/internal/server/middlewares"
 	"gorm.io/gorm"
 )
 
@@ -30,8 +31,8 @@ var (
 func NewEchoServer(conf *config.Config, db *gorm.DB) *echoServer {
 	app := echo.New()
 
-	app.Use(middleware.Logger())
-	app.Use(middleware.Recover())
+	mw := middlewares.NewMiddleware(app, conf.Server)
+	mw.RegisterMiddleWares()
 
 	app.Logger.SetLevel(log.DEBUG)
 
