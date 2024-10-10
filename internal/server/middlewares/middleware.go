@@ -19,12 +19,12 @@ func NewMiddleware(app *echo.Echo, conf *config.Server) *middleware {
 }
 
 // RegisterMiddleWares registers the application middlewares.
-func (m *middleware) RegisterMiddleWares() {
-	m.app.Use(echoMiddleware.Recover())
-	m.app.Use(echoMiddleware.Logger())
-	m.app.Use(corsMiddleware(m.conf.AllowOrigins))
-	m.app.Use(bodyLimitMiddleware(m.conf.BodyLimit))
-	m.app.Use(timeOutMiddleware(m.conf.Timeout))
+func (mw *middleware) RegisterMiddleWares() {
+	mw.app.Use(echoMiddleware.Recover())
+	mw.app.Use(echoMiddleware.Logger())
+	mw.app.Use(corsMiddleware(mw.conf.AllowOrigins))
+	mw.app.Use(bodyLimitMiddleware(mw.conf.BodyLimit))
+	mw.app.Use(timeOutMiddleware(mw.conf.Timeout))
 }
 
 // TimeOutMiddleware returns a middleware that times out requests.

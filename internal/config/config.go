@@ -56,7 +56,7 @@ var (
 	configInstance *Config
 )
 
-func LoadCofig() *Config {
+func LoadConfig() *Config {
 	once.Do(func() {
 		viper.SetConfigName("config")
 		viper.SetConfigType("yaml")
