@@ -15,6 +15,7 @@ func NewItemShopServiceImpl(itemShopRepo repositories.ItemShopRepository) ItemSh
 
 func (s *itemShopServiceImpl) Listing() ([]*models.Item, error) {
 	itemList, err := s.itemShopRepo.Listing()
+
 	if err != nil {
 		return nil, err
 	}

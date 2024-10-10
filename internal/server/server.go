@@ -11,7 +11,6 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"github.com/labstack/gommon/log"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/config"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/server/middlewares"
 	"gorm.io/gorm"
@@ -31,11 +30,6 @@ var (
 func NewEchoServer(conf *config.Config, db *gorm.DB) *echoServer {
 	app := echo.New()
 
-	mw := middlewares.NewMiddleware(app, conf.Server)
-	mw.RegisterMiddleWares()
-
-	app.Logger.SetLevel(log.DEBUG)
-
 	once.Do(func() {
 		server = &echoServer{
 			app,
@@ -48,7 +42,11 @@ func NewEchoServer(conf *config.Config, db *gorm.DB) *echoServer {
 }
 
 func (s *echoServer) Start() {
+	mw := middlewares.NewMiddleware(s.app, s.conf.Server)
+	mw.RegisterMiddleWares()
+
 	s.app.GET("/v1/health", s.healthCheck)
+	s.registerItemShopRouter()
 
 	quitCh := make(chan os.Signal, 1)
 	signal.Notify(quitCh, syscall.SIGINT, syscall.SIGTERM)

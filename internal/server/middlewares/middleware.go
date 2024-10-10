@@ -5,6 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	echoMiddleware "github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/gommon/log"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/config"
 )
 
@@ -25,6 +26,7 @@ func (mw *middleware) RegisterMiddleWares() {
 	mw.app.Use(corsMiddleware(mw.conf.AllowOrigins))
 	mw.app.Use(bodyLimitMiddleware(mw.conf.BodyLimit))
 	mw.app.Use(timeOutMiddleware(mw.conf.Timeout))
+	mw.app.Logger.SetLevel(log.DEBUG)
 }
 
 // TimeOutMiddleware returns a middleware that times out requests.

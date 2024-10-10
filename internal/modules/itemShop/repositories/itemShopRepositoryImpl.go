@@ -18,7 +18,7 @@ func NewItemShopRepositoryImpl(db *gorm.DB, logger echo.Logger) ItemShopReposito
 func (r *itemShopRepositoryImpl) Listing() ([]*entities.Item, error) {
 	itemList := make([]*entities.Item, 0)
 
-	if err := r.db.Find(itemList).Error; err != nil {
+	if err := r.db.Find(&itemList).Error; err != nil {
 		r.logger.Errorf("Failed to list items: %s", err.Error())
 		return nil, err
 	}
