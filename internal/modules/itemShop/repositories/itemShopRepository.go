@@ -2,10 +2,10 @@ package repositories
 
 import (
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/entities"
-	"github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
+	itemShopModels "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
 )
 
 type ItemShopRepository interface {
-	Listing(itemFilter *models.ItemFilter) ([]*entities.Item, error)
-	Counting(itemFilter *models.ItemFilter) (int64, error)
+	Listing(itemFilter *itemShopModels.ItemFilter) ([]*entities.Item, error)
+	Counting(itemFilter *itemShopModels.ItemFilter) (int64, error)
 }

@@ -4,19 +4,19 @@ import (
 	"math"
 
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/entities"
-	"github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
-	"github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/repositories"
+	itemShopModels "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
+	itemShopRepositories "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/repositories"
 )
 
 type itemShopServiceImpl struct {
-	itemShopRepo repositories.ItemShopRepository
+	itemShopRepo itemShopRepositories.ItemShopRepository
 }
 
-func NewItemShopServiceImpl(itemShopRepo repositories.ItemShopRepository) ItemShopService {
+func NewItemShopServiceImpl(itemShopRepo itemShopRepositories.ItemShopRepository) ItemShopService {
 	return &itemShopServiceImpl{itemShopRepo}
 }
 
-func (s *itemShopServiceImpl) Listing(itemFilter *models.ItemFilter) (*models.ItemResult, error) {
+func (s *itemShopServiceImpl) Listing(itemFilter *itemShopModels.ItemFilter) (*itemShopModels.ItemResult, error) {
 	itemList, err := s.itemShopRepo.Listing(itemFilter)
 	if err != nil {
 		return nil, err
@@ -36,15 +36,15 @@ func (s *itemShopServiceImpl) calTotalPage(totalItems int64, size int64) int64 {
 	return int64(math.Ceil(float64(totalItems) / float64(size)))
 }
 
-func (s *itemShopServiceImpl) toItemResult(itemList []*entities.Item, page, totalPage int64) *models.ItemResult {
-	itemModelList := make([]*models.Item, 0)
+func (s *itemShopServiceImpl) toItemResult(itemList []*entities.Item, page, totalPage int64) *itemShopModels.ItemResult {
+	itemModelList := make([]*itemShopModels.Item, 0)
 	for _, item := range itemList {
 		itemModelList = append(itemModelList, item.ToItemModel())
 	}
 
-	return &models.ItemResult{
+	return &itemShopModels.ItemResult{
 		Items: itemModelList,
-		Paginate: models.PaginateResult{
+		Paginate: itemShopModels.PaginateResult{
 			Page:     page,
 			TotaPage: totalPage,
 		},

@@ -17,4 +17,5 @@ func NewRouter(app *echo.Echo, db *gorm.DB, logger echo.Logger) *Router {
 
 func (r *Router) RegisterRoutes() {
 	r.registerItemShopRoutes()
+	r.registerItemManagingRoutes()
 }

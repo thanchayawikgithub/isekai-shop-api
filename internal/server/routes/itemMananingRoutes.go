@@ -1,18 +1,17 @@
 package routes
 
 import (
-	"github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemManaging/controllers"
-	"github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemManaging/repositories"
-	"github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemManaging/services"
+	itemManagingControllers "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemManaging/controllers"
+	itemManagingRepositories "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemManaging/repositories"
+	itemManagingServices "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemManaging/services"
 )
 
 func (r *Router) registerItemManagingRoutes() {
 	itemManagingRoutes := r.app.Group("/v1/item-managing")
 
-	itemManagingRepo := repositories.NewItemManagingRepositoryImpl(r.db, r.logger)
-	itemManagingService := services.NewItemManagingServiceImpl(itemManagingRepo)
-	itemManagingController := controllers.NewItemManagingControllerImpl(itemManagingService)
+	itemManagingRepo := itemManagingRepositories.NewItemManagingRepositoryImpl(r.db, r.logger)
+	itemManagingService := itemManagingServices.NewItemManagingServiceImpl(itemManagingRepo)
+	itemManagingController := itemManagingControllers.NewItemManagingControllerImpl(itemManagingService)
 
-	_ = itemManagingController
-	_ = itemManagingRoutes
+	itemManagingRoutes.POST("", itemManagingController.Creating)
 }

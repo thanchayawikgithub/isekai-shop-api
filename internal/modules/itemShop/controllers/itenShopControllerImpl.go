@@ -4,21 +4,21 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
-	"github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/services"
+	itemShopModels "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
+	itemShopServices "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/services"
 	"github.com/thanchayawikgithub/isekai-shop-api/pkg/custom"
 )
 
 type itemShopControllerImpl struct {
-	itemShopService services.ItemShopService
+	itemShopService itemShopServices.ItemShopService
 }
 
-func NewItemShopControllerImpl(itemShopService services.ItemShopService) ItemShopController {
+func NewItemShopControllerImpl(itemShopService itemShopServices.ItemShopService) ItemShopController {
 	return &itemShopControllerImpl{itemShopService}
 }
 
 func (c *itemShopControllerImpl) Listing(ctx echo.Context) error {
-	itemFilter := new(models.ItemFilter)
+	itemFilter := new(itemShopModels.ItemFilter)
 
 	customRequest := custom.NewCustomRequest(ctx)
 	if err := customRequest.Bind(itemFilter); err != nil {
