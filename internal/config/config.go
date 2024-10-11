@@ -52,8 +52,8 @@ type (
 )
 
 var (
-	once           sync.Once
-	configInstance *Config
+	once       sync.Once
+	configInst *Config
 )
 
 func LoadConfig() *Config {
@@ -68,16 +68,16 @@ func LoadConfig() *Config {
 			panic(err)
 		}
 
-		if err := viper.Unmarshal(&configInstance); err != nil {
+		if err := viper.Unmarshal(&configInst); err != nil {
 			panic(err)
 		}
 
 		validate := validator.New()
 
-		if err := validate.Struct(configInstance); err != nil {
+		if err := validate.Struct(configInst); err != nil {
 			panic(err)
 		}
 	})
 
-	return configInstance
+	return configInst
 }
