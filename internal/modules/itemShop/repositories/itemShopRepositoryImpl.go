@@ -20,20 +20,42 @@ func NewItemShopRepositoryImpl(db *gorm.DB, logger echo.Logger) ItemShopReposito
 func (r *itemShopRepositoryImpl) Listing(itemFilter *models.ItemFilter) ([]*entities.Item, error) {
 	itemList := make([]*entities.Item, 0)
 
-	query := r.db.Model(&entities.Item{})
+	query := r.db.Model(&entities.Item{}).Where("is_archive = ?", false)
 
 	if itemFilter.Name != "" {
 		query = query.Where("name ilike ?", "%"+itemFilter.Name+"%")
 	}
-
 	if itemFilter.Description != "" {
 		query = query.Where("description ilike ?", "%"+itemFilter.Description+"%")
 	}
 
-	if result := query.Find(&itemList); result.Error != nil {
+	offset := int((itemFilter.Page - 1) * itemFilter.Size)
+	limit := int(itemFilter.Size)
+
+	if result := query.Offset(offset).Limit(limit).Order("id desc").Find(&itemList); result.Error != nil {
 		r.logger.Errorf("Failed to list items: %s", result.Error)
 		return nil, &exceptions.ItemListing{}
 	}
 
 	return itemList, nil
+}
+
+func (r *itemShopRepositoryImpl) Counting(itemFilter *models.ItemFilter) (int64, error) {
+	query := r.db.Model(&entities.Item{}).Where("is_archive = ?", false)
+
+	if itemFilter.Name != "" {
+		query = query.Where("name ilike ?", "%"+itemFilter.Name+"%")
+	}
+	if itemFilter.Description != "" {
+		query = query.Where("description ilike ?", "%"+itemFilter.Description+"%")
+	}
+
+	var count int64
+
+	if result := query.Count(&count); result.Error != nil {
+		r.logger.Errorf("Failed to counting items: %s", result.Error)
+		return -1, &exceptions.ItemCounting{}
+	}
+
+	return count, nil
 }
