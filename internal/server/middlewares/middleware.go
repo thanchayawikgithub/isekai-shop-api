@@ -9,18 +9,18 @@ import (
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/config"
 )
 
-type middleware struct {
+type Middleware struct {
 	app  *echo.Echo
 	conf *config.Server
 }
 
 // NewMiddleware creates a new middleware instance.
-func NewMiddleware(app *echo.Echo, conf *config.Server) *middleware {
-	return &middleware{app, conf}
+func NewMiddleware(app *echo.Echo, conf *config.Server) *Middleware {
+	return &Middleware{app, conf}
 }
 
 // RegisterMiddleWares registers the application middlewares.
-func (mw *middleware) RegisterMiddleWares() {
+func (mw *Middleware) RegisterMiddleWares() {
 	mw.app.Use(echoMiddleware.Recover())
 	mw.app.Use(echoMiddleware.Logger())
 	mw.app.Use(corsMiddleware(mw.conf.AllowOrigins))

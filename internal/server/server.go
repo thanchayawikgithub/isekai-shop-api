@@ -13,6 +13,7 @@ import (
 
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/config"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/server/middlewares"
+	"github.com/thanchayawikgithub/isekai-shop-api/internal/server/routes"
 	"gorm.io/gorm"
 )
 
@@ -46,7 +47,8 @@ func (s *echoServer) Start() {
 	mw.RegisterMiddleWares()
 
 	s.app.GET("/v1/health", s.healthCheck)
-	s.registerItemShopRouter()
+	router := routes.NewRouter(s.app, s.db, s.app.Logger)
+	router.RegisterRoutes()
 
 	quitCh := make(chan os.Signal, 1)
 	signal.Notify(quitCh, syscall.SIGINT, syscall.SIGTERM)
