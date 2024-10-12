@@ -23,5 +23,11 @@
 
 # Go workspace file
 go.work
+/.vscode
+/.idea
+/app
+config.yml
+/tmp
+/.air.toml
 
 # End of https://www.toptal.com/developers/gitignore/api/go
