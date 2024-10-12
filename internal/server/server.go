@@ -12,15 +12,14 @@ import (
 	"github.com/labstack/echo/v4"
 
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/config"
+	"github.com/thanchayawikgithub/isekai-shop-api/internal/databases"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/server/middlewares"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/server/routes"
-
-	"gorm.io/gorm"
 )
 
 type echoServer struct {
 	app  *echo.Echo
-	db   *gorm.DB
+	db   databases.Database
 	conf *config.Config
 }
 
@@ -29,7 +28,7 @@ var (
 	server *echoServer
 )
 
-func NewEchoServer(conf *config.Config, db *gorm.DB) *echoServer {
+func NewEchoServer(conf *config.Config, db databases.Database) *echoServer {
 	app := echo.New()
 
 	once.Do(func() {
