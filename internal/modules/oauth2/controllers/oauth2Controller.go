@@ -1,3 +1,4 @@
 package controllers
 
-type Oauth2Controller interface{}
+type Oauth2Controller interface {
+}
