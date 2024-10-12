@@ -14,5 +14,4 @@ func (r *Router) registerItemShopRoutes() {
 	itemShopController := itemShopControllers.NewItemShopControllerImpl(itemShopService)
 
 	itemShopRoutes.GET("", itemShopController.Listing)
-
 }
