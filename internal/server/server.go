@@ -47,7 +47,7 @@ func (s *echoServer) Start() {
 	mw.RegisterMiddleWares()
 
 	s.app.GET("/v1/health", s.healthCheck)
-	router := routes.NewRouter(s.app, s.db, s.app.Logger)
+	router := routes.NewRouter(s.app, s.db, s.app.Logger, s.conf)
 	router.RegisterRoutes()
 
 	quitCh := make(chan os.Signal, 1)

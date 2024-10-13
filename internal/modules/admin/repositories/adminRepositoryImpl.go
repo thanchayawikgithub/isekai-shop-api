@@ -4,7 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/databases"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/entities"
-	adminExceptions "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/admin/exceptons"
+	adminExceptions "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/admin/exceptions"
 )
 
 type adminRepositoryImpl struct {

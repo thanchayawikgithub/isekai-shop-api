@@ -6,7 +6,7 @@ type ErrorMessage struct {
 	Message string `json:"message"`
 }
 
-func Error(ctx echo.Context, statusCode int, message string) error {
-	return ctx.JSON(statusCode, &ErrorMessage{Message: message})
+func Error(ctx echo.Context, statusCode int, err error) error {
+	return ctx.JSON(statusCode, &ErrorMessage{Message: err.Error()})
 
 }

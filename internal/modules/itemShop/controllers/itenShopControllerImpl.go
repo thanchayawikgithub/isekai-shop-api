@@ -22,12 +22,12 @@ func (c *itemShopControllerImpl) Listing(ctx echo.Context) error {
 
 	customRequest := custom.NewCustomRequest(ctx)
 	if err := customRequest.Bind(itemFilter); err != nil {
-		return custom.Error(ctx, http.StatusBadRequest, err.Error())
+		return custom.Error(ctx, http.StatusBadRequest, err)
 	}
 
 	itemModelList, err := c.itemShopService.Listing(itemFilter)
 	if err != nil {
-		return custom.Error(ctx, http.StatusInternalServerError, err.Error())
+		return custom.Error(ctx, http.StatusInternalServerError, err)
 	}
 
 	return ctx.JSON(http.StatusOK, itemModelList)

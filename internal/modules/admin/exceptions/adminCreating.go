@@ -1,4 +1,4 @@
-package exceptons
+package exceptions
 
 import "fmt"
 

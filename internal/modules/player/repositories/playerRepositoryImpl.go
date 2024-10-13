@@ -4,7 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/databases"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/entities"
-	playerExceptions "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/player/exceptons"
+	playerExceptions "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/player/exceptions"
 )
 
 type playerRepositoryImpl struct {

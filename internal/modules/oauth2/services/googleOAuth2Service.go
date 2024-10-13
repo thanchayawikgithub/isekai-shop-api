@@ -17,7 +17,7 @@ func NewGoogleOAuth2Service(playerRepo playerRepositories.PlayerRepository, admi
 	return &googleOAuth2Service{playerRepo, adminRepo}
 }
 
-func (s *googleOAuth2Service) PlayerAccountCreating(playerCreatingReq playerModels.PlayerCreatingReq) error {
+func (s *googleOAuth2Service) PlayerAccountCreating(playerCreatingReq *playerModels.PlayerCreatingReq) error {
 	if s.IsPlayer(playerCreatingReq.ID) {
 		return nil
 	}
@@ -37,7 +37,7 @@ func (s *googleOAuth2Service) PlayerAccountCreating(playerCreatingReq playerMode
 	return nil
 }
 
-func (s *googleOAuth2Service) AdminAccountCreating(adminCreatingReq adminModels.AdminCreatingReq) error {
+func (s *googleOAuth2Service) AdminAccountCreating(adminCreatingReq *adminModels.AdminCreatingReq) error {
 	if s.IsAdmin(adminCreatingReq.ID) {
 		return nil
 	}
