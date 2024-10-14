@@ -8,4 +8,7 @@ type Oauth2Controller interface {
 	PlayerLoginCallback(ctx echo.Context) error
 	AdminLoginCallback(ctx echo.Context) error
 	Logout(ctx echo.Context) error
+
+	PlayerAuthorize(ctx echo.Context, next echo.HandlerFunc) error
+	AdminAuthorize(ctx echo.Context, next echo.HandlerFunc) error
 }
