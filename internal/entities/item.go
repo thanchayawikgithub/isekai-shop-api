@@ -3,7 +3,7 @@ package entities
 import (
 	"time"
 
-	"github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
+	itemShopModels "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
 )
 
 type Item struct {
@@ -18,8 +18,8 @@ type Item struct {
 	UpdatedAt   time.Time `gorm:"not null;autoUpdateTime;"`
 }
 
-func (i *Item) ToItemModel() *models.Item {
-	return &models.Item{
+func (i *Item) ToItemModel() *itemShopModels.Item {
+	return &itemShopModels.Item{
 		ID:          i.ID,
 		Name:        i.Name,
 		Description: i.Description,

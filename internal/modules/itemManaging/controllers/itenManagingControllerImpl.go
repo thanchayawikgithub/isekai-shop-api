@@ -8,6 +8,7 @@ import (
 	itemManagingModels "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemManaging/models"
 	itemManagingServices "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemManaging/services"
 	"github.com/thanchayawikgithub/isekai-shop-api/pkg/custom"
+	"github.com/thanchayawikgithub/isekai-shop-api/pkg/utils"
 )
 
 type itemManagingControllerImpl struct {
@@ -19,7 +20,13 @@ func NewItemManagingControllerImpl(itemManagingService itemManagingServices.Item
 }
 
 func (c *itemManagingControllerImpl) Creating(ctx echo.Context) error {
+	adminID, err := utils.GetReqAdminD(ctx)
+	if err != nil {
+		return custom.Error(ctx, http.StatusBadRequest, err)
+	}
+
 	itemCreatingReq := new(itemManagingModels.ItemCreatingReq)
+	itemCreatingReq.AdminID = adminID
 
 	customRequest := custom.NewCustomRequest(ctx)
 	if err := customRequest.Bind(itemCreatingReq); err != nil {

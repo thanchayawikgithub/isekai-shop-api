@@ -1,8 +1,10 @@
 package services
 
 import (
-	_ "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
+	playerCoinModels "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/playerCoin/models"
 )
 
 type PlayerCoinService interface {
+	CoinAdding(coinAddingReq *playerCoinModels.CoinAddingReq) (*playerCoinModels.PlayerCoin, error)
+	CoinShowing(playerID string) *playerCoinModels.PlayerCoinShowing
 }

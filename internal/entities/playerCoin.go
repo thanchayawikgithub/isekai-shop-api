@@ -2,6 +2,8 @@ package entities
 
 import (
 	"time"
+
+	playerCoinModels "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/playerCoin/models"
 )
 
 type (
@@ -12,3 +14,12 @@ type (
 		CreatedAt time.Time `gorm:"not null;autoCreateTime;"`
 	}
 )
+
+func (p *PlayerCoin) ToPlayerCoinModel() *playerCoinModels.PlayerCoin {
+	return &playerCoinModels.PlayerCoin{
+		ID:        p.ID,
+		PlayerID:  p.PlayerID,
+		Amount:    p.Amount,
+		CreatedAt: p.CreatedAt,
+	}
+}

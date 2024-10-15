@@ -10,9 +10,12 @@ import (
 	"syscall"
 
 	"github.com/labstack/echo/v4"
-
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/config"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/databases"
+	adminRepositories "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/admin/repositories"
+	oauth2Controllers "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/oauth2/controllers"
+	oauth2Services "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/oauth2/services"
+	playerRepositories "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/player/repositories"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/server/middlewares"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/server/routes"
 )
@@ -48,7 +51,14 @@ func (s *echoServer) Start() {
 
 	s.app.GET("/v1/health", s.healthCheck)
 	router := routes.NewRouter(s.app, s.db, s.app.Logger, s.conf)
-	router.RegisterRoutes()
+
+	playerRepo := playerRepositories.NewPlayerRepositoryImpl(s.db, s.app.Logger)
+	adminRepo := adminRepositories.NewAdminRepositoryImpl(s.db, s.app.Logger)
+	oauth2Service := oauth2Services.NewGoogleOAuth2Service(playerRepo, adminRepo)
+	oauth2Controller := oauth2Controllers.NewGoogleOAuth2Controller(oauth2Service, s.conf.OAuth2, s.app.Logger)
+	authMiddleWare := middlewares.NewAuthMiddleware(oauth2Controller, s.conf.OAuth2, s.app.Logger)
+
+	router.RegisterRoutes(authMiddleWare)
 
 	quitCh := make(chan os.Signal, 1)
 	signal.Notify(quitCh, syscall.SIGINT, syscall.SIGTERM)
