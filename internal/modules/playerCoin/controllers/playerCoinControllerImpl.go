@@ -25,13 +25,12 @@ func (c *playerCoinControllerImpl) CoinAdding(ctx echo.Context) error {
 	}
 
 	coinAddingReq := new(playerCoinModels.CoinAddingReq)
-	coinAddingReq.PlayerID = playerID
 
 	customRequest := custom.NewCustomRequest(ctx)
-
 	if err := customRequest.Bind(coinAddingReq); err != nil {
 		return custom.Error(ctx, http.StatusBadRequest, err)
 	}
+	coinAddingReq.PlayerID = playerID
 
 	savedPlayerCoin, err := c.playerCoinService.CoinAdding(coinAddingReq)
 	if err != nil {

@@ -7,6 +7,7 @@ import (
 	itemShopModels "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
 	itemShopServices "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/services"
 	"github.com/thanchayawikgithub/isekai-shop-api/pkg/custom"
+	"github.com/thanchayawikgithub/isekai-shop-api/pkg/utils"
 )
 
 type itemShopControllerImpl struct {
@@ -29,7 +30,31 @@ func (c *itemShopControllerImpl) Listing(ctx echo.Context) error {
 	if err != nil {
 		return custom.Error(ctx, http.StatusInternalServerError, err)
 	}
-
 	return ctx.JSON(http.StatusOK, itemModelList)
+}
 
+func (c *itemShopControllerImpl) Buying(ctx echo.Context) error {
+	playerID, err := utils.GetReqPlayerID(ctx)
+	if err != nil {
+		return custom.Error(ctx, http.StatusBadRequest, err)
+	}
+
+	buyingReq := new(itemShopModels.BuyingReq)
+
+	customRequest := custom.NewCustomRequest(ctx)
+	if err := customRequest.Bind(buyingReq); err != nil {
+		return custom.Error(ctx, http.StatusBadRequest, err)
+	}
+	buyingReq.PlayerID = playerID
+
+	playerCoin, err := c.itemShopService.Buying(buyingReq)
+	if err != nil {
+		return custom.Error(ctx, http.StatusInternalServerError, err)
+	}
+
+	return ctx.JSON(http.StatusOK, playerCoin)
+}
+
+func (c *itemShopControllerImpl) Selling(ctx echo.Context) error {
+	return nil
 }

@@ -19,7 +19,7 @@ func NewRouter(app *echo.Echo, db databases.Database, logger echo.Logger, config
 }
 
 func (r *Router) RegisterRoutes(authMiddleWare *middlewares.AuthMiddleWare) {
-	r.registerItemShopRoutes()
+	r.registerItemShopRoutes(authMiddleWare)
 	r.registerItemManagingRoutes(authMiddleWare)
 	r.registerOAuth2Routes()
 	r.registerPlayerCoinRoutes(authMiddleWare)

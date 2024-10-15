@@ -7,6 +7,7 @@ import (
 	_ "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
 	playerCoinExceptions "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/playerCoin/exceptions"
 	playerCoinModels "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/playerCoin/models"
+	"gorm.io/gorm"
 )
 
 type playerCoinRepositoryImpl struct {
@@ -18,10 +19,15 @@ func NewPlayerCoinRepositoryImpl(db databases.Database, logger echo.Logger) Play
 	return &playerCoinRepositoryImpl{db, logger}
 }
 
-func (r *playerCoinRepositoryImpl) CoinAdding(playerCoinEntity *entities.PlayerCoin) (*entities.PlayerCoin, error) {
+func (r *playerCoinRepositoryImpl) CoinAdding(tx *gorm.DB, playerCoinEntity *entities.PlayerCoin) (*entities.PlayerCoin, error) {
+	conn := r.db.Connect()
+	if tx != nil {
+		conn = tx
+	}
+
 	savedPlayerCoin := new(entities.PlayerCoin)
 
-	if err := r.db.Connect().Create(playerCoinEntity).Scan(savedPlayerCoin).Error; err != nil {
+	if err := conn.Create(playerCoinEntity).Scan(savedPlayerCoin).Error; err != nil {
 		r.logger.Errorf("Failed to add player coin: %s", err.Error())
 		return nil, &playerCoinExceptions.CoinAdding{}
 	}

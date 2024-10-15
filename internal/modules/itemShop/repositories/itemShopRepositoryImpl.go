@@ -6,6 +6,7 @@ import (
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/entities"
 	itemShopExceptions "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/exceptions"
 	itemShopModels "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
+	"gorm.io/gorm"
 )
 
 type itemShopRepositoryImpl struct {
@@ -15,6 +16,19 @@ type itemShopRepositoryImpl struct {
 
 func NewItemShopRepositoryImpl(db databases.Database, logger echo.Logger) ItemShopRepository {
 	return &itemShopRepositoryImpl{db, logger}
+}
+
+func (r *itemShopRepositoryImpl) TransactionBegin() *gorm.DB {
+	tx := r.db.Connect()
+	return tx.Begin()
+}
+
+func (r *itemShopRepositoryImpl) TransactionRollback(tx *gorm.DB) error {
+	return tx.Rollback().Error
+}
+
+func (r *itemShopRepositoryImpl) TransactionCommit(tx *gorm.DB) error {
+	return tx.Commit().Error
 }
 
 func (r *itemShopRepositoryImpl) Listing(itemFilter *itemShopModels.ItemFilter) ([]*entities.Item, error) {
@@ -82,10 +96,15 @@ func (r *itemShopRepositoryImpl) FindByIDList(itemIDList []uint64) ([]*entities.
 	return items, nil
 }
 
-func (r *itemShopRepositoryImpl) PurchaseHistoryRecording(purchaseEntity *entities.PurchaseHistory) (*entities.PurchaseHistory, error) {
+func (r *itemShopRepositoryImpl) PurchaseHistoryRecording(tx *gorm.DB, purchaseEntity *entities.PurchaseHistory) (*entities.PurchaseHistory, error) {
+	conn := r.db.Connect()
+	if tx != nil {
+		conn = tx
+	}
+
 	savedPurchase := new(entities.PurchaseHistory)
 
-	if err := r.db.Connect().Create(purchaseEntity).Scan(savedPurchase).Error; err != nil {
+	if err := conn.Create(purchaseEntity).Scan(savedPurchase).Error; err != nil {
 		r.logger.Errorf("Failed to record purchase history: %s", err.Error())
 		return nil, &itemShopExceptions.PurchaseHistoryRecording{}
 	}

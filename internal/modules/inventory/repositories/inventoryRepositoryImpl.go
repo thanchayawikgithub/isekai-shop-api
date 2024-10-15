@@ -5,6 +5,7 @@ import (
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/databases"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/entities"
 	inventoryExceptions "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/inventory/exceptions"
+	"gorm.io/gorm"
 )
 
 type inventoryRepositoryImpl struct {
@@ -16,41 +17,51 @@ func NewInventoryRepositoryImpl(db databases.Database, logger echo.Logger) Inven
 	return &inventoryRepositoryImpl{db, logger}
 }
 
-func (r *inventoryRepositoryImpl) Filling(inventoryEntities []*entities.Inventory) ([]*entities.Inventory, error) {
-	savedInventories := make([]*entities.Inventory, 0)
+func (r *inventoryRepositoryImpl) Filling(tx *gorm.DB, playerID string, itemID uint64, quantity int) ([]*entities.Inventory, error) {
+	conn := r.db.Connect()
+	if tx != nil {
+		conn = tx
+	}
 
-	if err := r.db.Connect().CreateInBatches(inventoryEntities, len(inventoryEntities)).Scan(&savedInventories).Error; err != nil {
-		r.logger.Errorf("Error filling inventory: %v", err)
+	inventoryEntities := make([]*entities.Inventory, 0)
+
+	for range quantity {
+		inventoryEntities = append(inventoryEntities, &entities.Inventory{
+			PlayerID: playerID,
+			ItemID:   itemID,
+		})
+	}
+
+	if err := conn.Create(inventoryEntities).Error; err != nil {
+		r.logger.Errorf("Error filling inventory: %s", err.Error())
 		return nil, &inventoryExceptions.InventoryFilling{
-			PlayerID: inventoryEntities[0].PlayerID,
-			ItemID:   inventoryEntities[0].ItemID,
+			PlayerID: playerID,
+			ItemID:   itemID,
 		}
 	}
 
-	return savedInventories, nil
+	return inventoryEntities, nil
 }
 
-func (r *inventoryRepositoryImpl) Removing(playerID string, itemID uint64, quantity int) error {
+func (r *inventoryRepositoryImpl) Removing(tx *gorm.DB, playerID string, itemID uint64, quantity int) error {
+	conn := r.db.Connect()
+	if tx != nil {
+		conn = tx
+	}
+
 	inventories, err := r.findPlayerItem(playerID, itemID, quantity)
 	if err != nil {
 		return err
 	}
 
-	tx := r.db.Connect().Begin()
 	for _, inventory := range inventories {
 		inventory.IsDeleted = true
 
-		if err := tx.Model(&entities.Inventory{}).Where("id = ?", inventory.ID).Updates(inventory); err != nil {
+		if err := conn.Model(&entities.Inventory{}).Where("id = ?", inventory.ID).Updates(inventory); err != nil {
 			tx.Rollback()
 			r.logger.Errorf("error removing player item in inventory: %s", err)
 			return &inventoryExceptions.PlayerItemRemoving{ItemID: itemID}
 		}
-	}
-
-	if err := tx.Commit().Error; err != nil {
-		tx.Rollback()
-		r.logger.Errorf("error removing player item in inventory: %s", err.Error())
-		return &inventoryExceptions.PlayerItemRemoving{ItemID: itemID}
 	}
 
 	return nil
