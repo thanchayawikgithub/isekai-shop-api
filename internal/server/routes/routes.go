@@ -23,4 +23,5 @@ func (r *Router) RegisterRoutes(authMiddleWare *middlewares.AuthMiddleWare) {
 	r.registerItemManagingRoutes(authMiddleWare)
 	r.registerOAuth2Routes()
 	r.registerPlayerCoinRoutes(authMiddleWare)
+	r.registerInventoryRoutes(authMiddleWare)
 }

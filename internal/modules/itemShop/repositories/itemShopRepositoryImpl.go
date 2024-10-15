@@ -70,3 +70,25 @@ func (r *itemShopRepositoryImpl) FindByID(itemID uint64) (*entities.Item, error)
 
 	return item, nil
 }
+
+func (r *itemShopRepositoryImpl) FindByIDList(itemIDList []uint64) ([]*entities.Item, error) {
+	items := make([]*entities.Item, 0)
+
+	if err := r.db.Connect().Model(&entities.Item{}).Where("id in ?", itemIDList).Find(&items).Error; err != nil {
+		r.logger.Errorf("Failed to find item by ID list: %s", err.Error())
+		return nil, &itemShopExceptions.ItemListing{}
+	}
+
+	return items, nil
+}
+
+func (r *itemShopRepositoryImpl) PurchaseHistoryRecording(purchaseEntity *entities.PurchaseHistory) (*entities.PurchaseHistory, error) {
+	savedPurchase := new(entities.PurchaseHistory)
+
+	if err := r.db.Connect().Create(purchaseEntity).Scan(savedPurchase).Error; err != nil {
+		r.logger.Errorf("Failed to record purchase history: %s", err.Error())
+		return nil, &itemShopExceptions.PurchaseHistoryRecording{}
+	}
+
+	return savedPurchase, nil
+}
