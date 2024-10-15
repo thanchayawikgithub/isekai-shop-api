@@ -56,5 +56,23 @@ func (c *itemShopControllerImpl) Buying(ctx echo.Context) error {
 }
 
 func (c *itemShopControllerImpl) Selling(ctx echo.Context) error {
-	return nil
+	playerID, err := utils.GetReqPlayerID(ctx)
+	if err != nil {
+		return custom.Error(ctx, http.StatusBadRequest, err)
+	}
+
+	sellingReq := new(itemShopModels.SellingReq)
+
+	customRequest := custom.NewCustomRequest(ctx)
+	if err := customRequest.Bind(sellingReq); err != nil {
+		return custom.Error(ctx, http.StatusBadRequest, err)
+	}
+	sellingReq.PlayerID = playerID
+
+	playerCoin, err := c.itemShopService.Selling(sellingReq)
+	if err != nil {
+		return custom.Error(ctx, http.StatusInternalServerError, err)
+	}
+
+	return ctx.JSON(http.StatusOK, playerCoin)
 }

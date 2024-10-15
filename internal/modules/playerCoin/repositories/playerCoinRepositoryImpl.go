@@ -4,7 +4,6 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/databases"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/entities"
-	_ "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/itemShop/models"
 	playerCoinExceptions "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/playerCoin/exceptions"
 	playerCoinModels "github.com/thanchayawikgithub/isekai-shop-api/internal/modules/playerCoin/models"
 	"gorm.io/gorm"

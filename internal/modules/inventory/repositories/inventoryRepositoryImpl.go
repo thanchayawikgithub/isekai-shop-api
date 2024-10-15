@@ -1,6 +1,8 @@
 package repositories
 
 import (
+	"fmt"
+
 	"github.com/labstack/echo/v4"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/databases"
 	"github.com/thanchayawikgithub/isekai-shop-api/internal/entities"
@@ -57,8 +59,9 @@ func (r *inventoryRepositoryImpl) Removing(tx *gorm.DB, playerID string, itemID 
 	for _, inventory := range inventories {
 		inventory.IsDeleted = true
 
-		if err := conn.Model(&entities.Inventory{}).Where("id = ?", inventory.ID).Updates(inventory); err != nil {
-			tx.Rollback()
+		fmt.Print(*inventory)
+
+		if err := conn.Model(&entities.Inventory{}).Where("id = ?", inventory.ID).Updates(inventory).Error; err != nil {
 			r.logger.Errorf("error removing player item in inventory: %s", err)
 			return &inventoryExceptions.PlayerItemRemoving{ItemID: itemID}
 		}
@@ -84,7 +87,7 @@ func (r *inventoryRepositoryImpl) findPlayerItem(playerID string, itemID uint64,
 	inventories := make([]*entities.Inventory, 0)
 
 	if err := r.db.Connect().Where("player_id = ? and item_id = ? and is_deleted = ?", playerID, itemID, false).
-		Limit(quantity).Find(inventories).Error; err != nil {
+		Limit(quantity).Find(&inventories).Error; err != nil {
 		r.logger.Errorf("error finding player item in inventory by ID: %s", err.Error())
 		return nil, &inventoryExceptions.PlayerItemRemoving{ItemID: itemID}
 	}

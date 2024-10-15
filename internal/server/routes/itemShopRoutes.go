@@ -20,4 +20,5 @@ func (r *Router) registerItemShopRoutes(authMiddleWare *middlewares.AuthMiddleWa
 
 	itemShopRoutes.GET("", itemShopController.Listing)
 	itemShopRoutes.POST("/buying", itemShopController.Buying, authMiddleWare.PlayerAuthorize)
+	itemShopRoutes.POST("/selling", itemShopController.Selling, authMiddleWare.PlayerAuthorize)
 }

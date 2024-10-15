@@ -1,0 +1,812 @@
+{
+	"info": {
+		"_postman_id": "eeb3d309-5f3c-40b3-8f50-cc4c6dadeb77",
+		"name": "isekai-shop-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35389495"
+	},
+	"item": [
+		{
+			"name": "item shop",
+			"item": [
+				{
+					"name": "item listing",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/item-shop/listing",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"item-shop",
+								"listing"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/item-shop",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"item-shop"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 10 Oct 2024 16:04:29 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "929"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"ID\": 1,\n        \"Name\": \"Sword\",\n        \"Description\": \"A sword that can be used to fight enemies.\",\n        \"Picture\": \"https://i.pinimg.com/736x/73/cc/79/73cc79391b764ec40a5c77052bb846b9.jpg\",\n        \"Price\": 100\n    },\n    {\n        \"ID\": 2,\n        \"Name\": \"Shield\",\n        \"Description\": \"A shield that can be used to block enemy attacks.\",\n        \"Picture\": \"https://i.pinimg.com/736x/fe/83/27/fe832717d33f05c2dbd845809ce877b8.jpg\",\n        \"Price\": 50\n    },\n    {\n        \"ID\": 3,\n        \"Name\": \"Potion\",\n        \"Description\": \"A potion that can be used to heal wounds.\",\n        \"Picture\": \"https://i.pinimg.com/564x/14/7e/7d/147e7d58fa2becce0045f3aadf1808b1.jpg\",\n        \"Price\": 30\n    },\n    {\n        \"ID\": 4,\n        \"Name\": \"Bow\",\n        \"Description\": \"A bow that can be used to shoot enemies from afar.\",\n        \"Picture\": \"https://i.pinimg.com/564x/1f/91/72/1f9172f5bc27094c4e167e55f8cce2f2.jpg\",\n        \"Price\": 80\n    },\n    {\n        \"ID\": 5,\n        \"Name\": \"Arrow\",\n        \"Description\": \"An arrow that can be used with a bow to shoot enemies from afar.\",\n        \"Picture\": \"https://i.pinimg.com/564x/3f/25/84/3f25842cb4a8ad53a19575cc3d25c844.jpg\",\n        \"Price\": 10\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "buying",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"itemID\":1,\n    \"quantity\": 2\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/item-shop/buying",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"item-shop",
+								"buying"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"itemID\":1,\n    \"quantity\": 2\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/item-shop/buying",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"item-shop",
+										"buying"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 15 Oct 2024 16:03:36 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "105"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"playerID\": \"116110243152827985834\",\n    \"amount\": -200,\n    \"createdAt\": \"2024-10-15T23:03:35.994311+07:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "selling",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"itemID\":2,\n    \"quantity\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/item-shop/selling",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"item-shop",
+								"selling"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"itemID\":2,\n    \"quantity\":2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/item-shop/selling",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"item-shop",
+										"selling"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 15 Oct 2024 17:14:13 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "104"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 44,\n    \"playerID\": \"116110243152827985834\",\n    \"amount\": 50,\n    \"createdAt\": \"2024-10-16T00:14:13.118646+07:00\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "item-managing",
+			"item": [
+				{
+					"name": "creating",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Test Sword234\",\n    \"description\": \"Test Desc\",\n    \"price\": 200,\n    \"picture\" : \"https://pic.com/sword.png\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/item-managing",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"item-managing"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Test Sword\",\n    \"description\": \"Test Desc\",\n    \"price\": 200,\n    \"picture\" : \"https://pic.com/sword.png\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/item-managing",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"item-managing"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Oct 2024 17:45:23 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "105"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"Test Sword\",\n    \"description\": \"Test Desc\",\n    \"picture\": \"https://pic.com/sword.png\",\n    \"price\": 200\n}"
+						}
+					]
+				},
+				{
+					"name": "editing",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Edited Sword\",\n    \"price\": 60\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/item-managing/:itemID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"item-managing",
+								":itemID"
+							],
+							"variable": [
+								{
+									"key": "itemID",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Edited Sword\",\n    \"price\": 60\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/item-managing/:itemID",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"item-managing",
+										":itemID"
+									],
+									"variable": [
+										{
+											"key": "itemID",
+											"value": "6"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Oct 2024 19:04:16 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "106"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"Edited Sword\",\n    \"description\": \"Test Desc\",\n    \"picture\": \"https://pic.com/sword.png\",\n    \"price\": 60\n}"
+						}
+					]
+				},
+				{
+					"name": "archiving",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/item-managing/:itemID",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"item-managing",
+								":itemID"
+							],
+							"variable": [
+								{
+									"key": "itemID",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Edited Sword\",\n    \"price\": 60\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/item-managing/:itemID",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"item-managing",
+										":itemID"
+									],
+									"variable": [
+										{
+											"key": "itemID",
+											"value": "6"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Oct 2024 19:04:16 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "106"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 6,\n    \"name\": \"Edited Sword\",\n    \"description\": \"Test Desc\",\n    \"picture\": \"https://pic.com/sword.png\",\n    \"price\": 60\n}"
+						},
+						{
+							"name": "204",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/item-managing/:itemID",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"item-managing",
+										":itemID"
+									],
+									"variable": [
+										{
+											"key": "itemID",
+											"value": "6"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 12 Oct 2024 06:27:25 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "oauth2",
+			"item": [
+				{
+					"name": "logout",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/oauth2/google/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"oauth2",
+								"google",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "player coin",
+			"item": [
+				{
+					"name": "adding",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\" : 5000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/v1/player-coin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"player-coin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"amount\" : 2000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/v1/player-coin",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"player-coin"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 14 Oct 2024 09:18:13 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "105"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"playerID\": \"116110243152827985834\",\n    \"amount\": 2000,\n    \"createdAt\": \"2024-10-14T16:18:13.156862+07:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "showing",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "inventory",
+			"item": [
+				{
+					"name": "listing",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/inventory",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"inventory"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/v1/inventory",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"v1",
+										"inventory"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 15 Oct 2024 16:04:55 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "203"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"item\": {\n            \"id\": 1,\n            \"name\": \"Sword\",\n            \"description\": \"A sword that can be used to fight enemies.\",\n            \"picture\": \"https://i.pinimg.com/736x/73/cc/79/73cc79391b764ec40a5c77052bb846b9.jpg\",\n            \"price\": 100\n        },\n        \"quantity\": 2\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/v1/panic",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"panic"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/v1/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"health"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain; charset=UTF-8"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Oct 2024 16:05:00 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "2"
+						}
+					],
+					"cookie": [],
+					"body": "OK"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
